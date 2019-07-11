@@ -16,7 +16,11 @@ class Books extends Component {
   };
 
   componentDidMount() {
-    this.loadBooks();
+    // this.loadBooks();
+    API.searchBooks('calvin and hobbes')
+      .then(res => {
+        console.log(res.data)
+      })
   }
 
   loadBooks = () => {
@@ -106,8 +110,8 @@ class Books extends Component {
                 ))}
               </List>
             ) : (
-              <h3>No Results to Display</h3>
-            )}
+                <h3>No Results to Display</h3>
+              )}
           </Col>
         </Row>
       </Container>

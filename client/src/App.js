@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Books from "./pages/Books";
-import Detail from "./pages/Detail";
+import Search from "./pages/Search";
+import Saved from "./pages/Saved";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
@@ -11,9 +11,9 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Route exact path='/' component={Books}></Route>
-          <Route exact path='/books' component={Books}></Route>
-          <Route exact path='/books/:id' component={Detail}></Route>
+          <Route exact path='/' component={Search}></Route>
+          <Route exact path='/search' component={Search}></Route>
+          <Route exact path='/saved' component={Saved}></Route>
           <Route component={NoMatch} />
         </Switch>
       </div>
