@@ -13,4 +13,8 @@ router
   .put(booksController.update)
   .delete(booksController.remove);
 
+router
+  .route('/googleid/:id')
+  .get(booksController.findByGoogleId)
+
 module.exports = router;
