@@ -3,34 +3,80 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
+import ViewBtn from "../components/buttons/ViewBtn";
+import DeleteBtn from "../components/buttons/DeleteBtn";
+import { List, ListItem } from "../components/List";
+import { Input, TextArea, FormBtn } from "../components/Form";
 
-class Detail extends Component {
+
+class Saved extends Component {
   state = {
-    book: {}
+    books: []
   };
   // Add code to get the book with an _id equal to the id in the route param
   // e.g. http://localhost:3000/books/:id
   // The book id for this route can be accessed using this.props.match.params.id
 
   componentDidMount() {
-    this.getBook();
+    this.loadBooks();
   }
 
-  getBook = () => {
-    API.getBook(this.props.match.params.id)
+  loadBooks = () => {
+    API.getBooks()
       .then(res => {
-        console.log(res)
-        this.setState({book: res.data})
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        this.setState({ books: res.data })
+      }
+      )
+      .catch(err => console.log(err));
+  };
+
+  // getBook = () => {
+  //   API.getBook(this.props.match.params.id)
+  //     .then(res => {
+  //       console.log(res)
+  //       this.setState({book: res.data})
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+
+  deleteBook = (id) => {
+    console.log(id)
+  }
+
+  renderBooks = () => {
+
+    return this.state.books.map(book => (
+      <ListItem
+        key={book.google_id}
+      >
+        <DeleteBtn
+          onClick={() => this.deleteBook(book._id)}
+        />
+        <ViewBtn
+          href={book.link}
+        />
+
+        <h3>{book.title}</h3>
+        <p>{book.description}</p>
+        <p>{book.google_id}</p>
+        <p>{book.authors}</p>
+        {
+          book.image ? (
+            <img src={book.image} alt="book-image"></img>
+          ) :
+            ('')
+        }
+
+      </ListItem>
+    ));
   }
 
   render() {
     return (
       <Container fluid>
-        <Row>
+        {/* <Row>
           <Col size="md-12">
             <Jumbotron>
               <h1>
@@ -51,10 +97,14 @@ class Detail extends Component {
           <Col size="md-2">
             <Link to="/">← Back to Authors</Link>
           </Col>
-        </Row>
+        </Row> */}
+        <List>
+          {this.renderBooks()}
+        </List>
+
       </Container>
     );
   }
 }
 
-export default Detail;
+export default Saved;

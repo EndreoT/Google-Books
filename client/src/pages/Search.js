@@ -15,9 +15,7 @@ class Books extends Component {
     search: ''
   };
 
-  componentDidMount() {
-    // this.loadBooks();
-  }
+
 
   deleteBooks = () => {
     this.setState({ books: [] })
@@ -96,7 +94,7 @@ class Books extends Component {
         }
 
       </ListItem>
-    ))
+    ));
   }
 
   render() {
@@ -115,18 +113,17 @@ class Books extends Component {
           >
             Search
           </FormBtn>
-
-
         </Jumbotron>
 
-        {this.state.books.length ? (
-          <List>
-            {this.renderBooks()}
-          </List>
+        {
+          this.state.books.length ? (
+            <List>
+              {this.renderBooks()}
+            </List>
 
-        ) : (
-            <h3>No Results to Display</h3>
-          )
+          ) : (
+              <h3>No Results to Display</h3>
+            )
         }
       </Container>
     );
