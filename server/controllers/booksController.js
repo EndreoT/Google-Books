@@ -26,7 +26,7 @@ module.exports = {
         if (book.length) {
           return res.status(422).json({ message: 'Book already exists' })
         }
-        
+
         db.Book
           .create(req.body)
           .then(dbModel => res.json(dbModel))
@@ -57,7 +57,7 @@ module.exports = {
 
   findByGoogleId: function (req, res) {
     db.Book
-      .find({ google_id: req.params.googleId })
+      .find({ google_id: req.params.google_id })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

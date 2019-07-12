@@ -14,7 +14,7 @@ router
   .delete(booksController.remove);
 
 router
-  .route('/googleid/:id')
+  .route('/googleid/:google_id')
   .get(booksController.findByGoogleId)
 
 module.exports = router;

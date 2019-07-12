@@ -4,12 +4,12 @@ import React from "react";
 // That way we don't have to define them all individually
 function SaveBtn(props) {
   return (
-    <a
+    <button
       className="btn btn-outline-success float-right"
       {...props}
       target='_blank'
       role="button"
-    >Save Book</a>
+    >{props.children}</button>
   );
 }
 

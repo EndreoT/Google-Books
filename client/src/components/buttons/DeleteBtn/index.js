@@ -4,12 +4,12 @@ import React from "react";
 // That way we don't have to define them all individually
 function DeleteBtn(props) {
   return (
-    <a
+    <button
       className="btn btn-outline-danger float-right"
       {...props}
       target='_blank'
       role="button"
-    >Delete Book</a>
+    >Delete Book</button>
   );
 }
 
