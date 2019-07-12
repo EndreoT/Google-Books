@@ -6,7 +6,7 @@ import { Col, Row } from "../Grid";
 const BookDisplay = (props) => (
     <React.Fragment>
         <h3>{props.title}</h3>
-        <p>Written by {props.authors.join(', ')}</p>
+        <p>Written by {props.authors ? props.authors.join(', ') : 'no information given.'}</p>
         <Row>
             <Col size="md-2 sm-12">
                 {

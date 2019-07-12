@@ -46,6 +46,8 @@ class Books extends Component {
                   link: book.volumeInfo.infoLink,
                   saved: res.data.length ? true : false
                 })
+              }).catch(err => {
+                console.log(err);
               })
           });
           this.setState({ books: processedBooks });
@@ -66,7 +68,7 @@ class Books extends Component {
 
     API.saveBook(savedBook)
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
       }).catch(err => {
         console.log(err)
       })
