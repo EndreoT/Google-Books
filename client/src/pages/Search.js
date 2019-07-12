@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DeleteBtn from "../components/DeleteBtn";
+import ViewBtn from "../components/buttons/ViewBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
@@ -19,12 +19,12 @@ class Books extends Component {
   }
 
   deleteBooks = () => {
-    this.setState({books: []})
+    this.setState({ books: [] })
   }
 
   searchBooks = (query) => {
     this.deleteBooks()
-    
+
     API.searchBooks(query)
       .then(res => {
         const processedBooks = [];
@@ -36,18 +36,18 @@ class Books extends Component {
             description: book.volumeInfo.description,
             authors: book.volumeInfo.authors,
             image: book.volumeInfo.imageLinks,
-            link: book.selfLink,
+            link: book.volumeInfo.infoLink,
           })
         })
         this.setState({ books: processedBooks })
       })
   };
 
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
-  };
+  // deleteBook = id => {
+  //   API.deleteBook(id)
+  //     .then(res => this.loadBooks())
+  //     .catch(err => console.log(err));
+  // };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -62,17 +62,26 @@ class Books extends Component {
   };
 
   renderBooks = () => {
+
     return this.state.books.map(book => (
-      <List
+      <ListItem
         key={book.googleId}
       >
+        <ViewBtn
+          href={book.link}>
+        </ViewBtn>
         <h3>{book.title}</h3>
         <p>{book.description}</p>
         <p>{book.googleId}</p>
         <p>{book.authors}</p>
-        {/* {book.image} */}
-        <p>{book.link}</p>
-      </List>
+        {
+          book.image ? (
+            <img src={book.image.thumbnail} alt="book-image"></img>
+          ) :
+            ('')
+        }
+
+      </ListItem>
     ))
   }
 
@@ -87,17 +96,20 @@ class Books extends Component {
             onChange={this.handleInputChange}
           />
 
-
-
           <FormBtn
             onClick={this.handleFormSubmit}
-          >Search</FormBtn>
+          >
+            Search
+          </FormBtn>
 
 
         </Jumbotron>
 
         {this.state.books.length ? (
-          this.renderBooks()
+          <List>
+            {this.renderBooks()}
+          </List>
+
         ) : (
             <h3>No Results to Display</h3>
           )
