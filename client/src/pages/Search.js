@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ViewBtn from "../components/buttons/ViewBtn";
+import SaveBtn from "../components/buttons/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
@@ -31,11 +32,13 @@ class Books extends Component {
 
         res.data.items.forEach(book => {
           processedBooks.push({
-            googleId: book.id,
+            google_id: book.id,
             title: book.volumeInfo.title,
             description: book.volumeInfo.description,
             authors: book.volumeInfo.authors,
-            image: book.volumeInfo.imageLinks,
+            image: book.volumeInfo.imageLinks ? (
+              book.volumeInfo.imageLinks.thumbnail
+            ) : '',
             link: book.volumeInfo.infoLink,
           })
         })
@@ -48,6 +51,13 @@ class Books extends Component {
   //     .then(res => this.loadBooks())
   //     .catch(err => console.log(err));
   // };
+
+  saveBook = (book) => {
+    API.saveBook(book)
+      .then(res => {
+        console.log(res.data)
+      })
+  }
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -65,18 +75,22 @@ class Books extends Component {
 
     return this.state.books.map(book => (
       <ListItem
-        key={book.googleId}
+        key={book.google_id}
       >
+        <SaveBtn
+          onClick={() => this.saveBook(book)}
+        />
         <ViewBtn
-          href={book.link}>
-        </ViewBtn>
+          href={book.link}
+        />
+
         <h3>{book.title}</h3>
         <p>{book.description}</p>
-        <p>{book.googleId}</p>
+        <p>{book.google_id}</p>
         <p>{book.authors}</p>
         {
           book.image ? (
-            <img src={book.image.thumbnail} alt="book-image"></img>
+            <img src={book.image} alt="book-image"></img>
           ) :
             ('')
         }

@@ -2,15 +2,15 @@ import React from "react";
 
 // The ...props means, spread all of the passed props onto this element
 // That way we don't have to define them all individually
-function ViewBtn(props) {
+function SaveBtn(props) {
   return (
     <a
-      className="btn btn-outline-info float-right"
+      className="btn btn-outline-success float-right"
       {...props}
       target='_blank'
       role="button"
-    >View Book</a>
+    >Save Book</a>
   );
 }
 
-export default ViewBtn;
+export default SaveBtn;
