@@ -45,6 +45,12 @@ class Saved extends Component {
     console.log(id)
   }
 
+    // deleteBook = id => {
+  //   API.deleteBook(id)
+  //     .then(res => this.loadBooks())
+  //     .catch(err => console.log(err));
+  // };
+
   renderBooks = () => {
 
     return this.state.books.map(book => (

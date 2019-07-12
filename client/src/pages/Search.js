@@ -7,15 +7,14 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
-import { runInThisContext } from "vm";
+
 
 class Books extends Component {
+
   state = {
     books: [],
     search: ''
   };
-
-
 
   deleteBooks = () => {
     this.setState({ books: [] })
@@ -44,16 +43,12 @@ class Books extends Component {
       })
   };
 
-  // deleteBook = id => {
-  //   API.deleteBook(id)
-  //     .then(res => this.loadBooks())
-  //     .catch(err => console.log(err));
-  // };
-
   saveBook = (book) => {
     API.saveBook(book)
       .then(res => {
         console.log(res.data)
+      }).catch(err => {
+        console.log(err)
       })
   }
 
