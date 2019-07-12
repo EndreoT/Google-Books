@@ -33,19 +33,7 @@ class Saved extends Component {
       .catch(err => console.log(err));
   };
 
-  // getBook = () => {
-  //   API.getBook(this.props.match.params.id)
-  //     .then(res => {
-  //       console.log(res)
-  //       this.setState({book: res.data})
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }
-
   deleteBook = (id) => {
-    console.log(id)
     API.deleteBook(id)
       .then(res => this.deleteBookFromState(id))
       .catch(err => console.log(err));
