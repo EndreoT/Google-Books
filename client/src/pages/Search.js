@@ -5,9 +5,10 @@ import * as utils from '../utils/utils';
 import ViewBtn from "../components/buttons/ViewBtn";
 import SaveBtn from "../components/buttons/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
-import { Col, Container, Row } from "../components/Grid";
+import { Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
+import BookDisplay from '../components/BookDisplay';
 
 
 class Books extends Component {
@@ -26,7 +27,7 @@ class Books extends Component {
 
     API.searchBooks(query)
       .then(async res => {
-  
+
         const processedBooks = [];
 
         const start = async () => {
@@ -50,26 +51,6 @@ class Books extends Component {
           this.setState({ books: processedBooks });
         }
         start();
-
-
-        // await res.data.items.forEach(async (book) => {
-        //   await API.getBookByGoogleId(book.id)
-        //     .then(res => {
-        //       processedBooks.push({
-        //         google_id: book.id,
-        //         title: book.volumeInfo.title,
-        //         description: book.volumeInfo.description,
-        //         authors: book.volumeInfo.authors,
-        //         image: book.volumeInfo.imageLinks ? (
-        //           book.volumeInfo.imageLinks.thumbnail
-        //         ) : '',
-        //         link: book.volumeInfo.infoLink,
-        //         saved: res.data.length ? true : false
-        //       })
-        //     })
-        // })
-        // console.log(processedBooks)
-        // this.setState({ books: processedBooks })
       })
   };
 
@@ -81,7 +62,7 @@ class Books extends Component {
         book.saved = true;
       }
     })
-    this.setState({books})
+    this.setState({ books })
 
     API.saveBook(savedBook)
       .then(res => {
@@ -113,26 +94,19 @@ class Books extends Component {
         <SaveBtn
           disabled={book.saved ? true : false}
           onClick={() => this.saveBook(book)}
-        >{book.saved ? 'Alread Saved' : 'Save Book'}</SaveBtn>
+        >
+          {book.saved ? 'Saved' : 'Save Book'}
+        </SaveBtn>
         <ViewBtn
           href={book.link}
         />
-        <h3>{book.title}</h3>
-        
-        <p>Written by {book.authors.join(', ')}</p>
-        <Row>
-          <Col size="md-2 sm-12">
-            {
-              book.image ? (
-                <img src={book.image} alt="book-image"></img>
-              ) :
-                ('')
-            }
-          </Col>
-          <Col size="md-10 sm-12">
-            <p>{book.description}</p>
-          </Col>
-        </Row>
+
+        <BookDisplay
+          title={book.title}
+          authors={book.authors}
+          image={book.image}
+          description={book.description}
+        />
       </ListItem>
     ));
   }

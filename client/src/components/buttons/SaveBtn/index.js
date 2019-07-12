@@ -8,7 +8,6 @@ function SaveBtn(props) {
       className="btn btn-outline-success float-right"
       {...props}
       target='_blank'
-      role="button"
     >{props.children}</button>
   );
 }

@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../components/Grid";
-import Jumbotron from "../components/Jumbotron";
+
 import API from "../utils/API";
+import { Container } from "../components/Grid";
+import Jumbotron from "../components/Jumbotron";
 import ViewBtn from "../components/buttons/ViewBtn";
 import DeleteBtn from "../components/buttons/DeleteBtn";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
-
+import BookDisplay from '../components/BookDisplay';
 
 class Saved extends Component {
   state = {
@@ -65,21 +64,12 @@ class Saved extends Component {
           href={book.link}
         />
 
-        <h3>{book.title}</h3>
-        <p>Written by {book.authors.join(', ')}</p>
-        <Row>
-          <Col size="md-2 sm-12">
-            {
-              book.image ? (
-                <img src={book.image} alt="book-image"></img>
-              ) :
-                ('')
-            }
-          </Col>
-          <Col size="md-10 sm-12">
-            <p>{book.description}</p>
-          </Col>
-        </Row>
+        <BookDisplay
+          title={book.title}
+          authors={book.authors}
+          image={book.image}
+          description={book.description}
+        />
 
       </ListItem>
     ));
@@ -88,11 +78,11 @@ class Saved extends Component {
   render() {
     return (
       <Container fluid>
-            <Jumbotron>
-              <h2>
-                Saved Books
+        <Jumbotron>
+          <h2>
+            Saved Books
               </h2>
-            </Jumbotron>
+        </Jumbotron>
 
         <List>
           {this.renderBooks()}

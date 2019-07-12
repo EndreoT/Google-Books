@@ -8,7 +8,6 @@ function DeleteBtn(props) {
       className="btn btn-outline-danger float-right"
       {...props}
       target='_blank'
-      role="button"
     >Delete Book</button>
   );
 }
