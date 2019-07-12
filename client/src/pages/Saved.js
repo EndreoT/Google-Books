@@ -13,20 +13,24 @@ class Saved extends Component {
   state = {
     books: []
   };
-  // Add code to get the book with an _id equal to the id in the route param
-  // e.g. http://localhost:3000/books/:id
-  // The book id for this route can be accessed using this.props.match.params.id
 
   componentDidMount() {
     this.loadBooks();
+  }
+
+  deleteBookFromState = (id) => {
+    const books = this.state.books.filter(book => {
+      return book._id !== id;
+    })
+
+    this.setState({ books })
   }
 
   loadBooks = () => {
     API.getBooks()
       .then(res => {
         this.setState({ books: res.data })
-      }
-      )
+      })
       .catch(err => console.log(err));
   };
 
@@ -43,13 +47,10 @@ class Saved extends Component {
 
   deleteBook = (id) => {
     console.log(id)
+    API.deleteBook(id)
+      .then(res => this.deleteBookFromState(id))
+      .catch(err => console.log(err));
   }
-
-    // deleteBook = id => {
-  //   API.deleteBook(id)
-  //     .then(res => this.loadBooks())
-  //     .catch(err => console.log(err));
-  // };
 
   renderBooks = () => {
 
@@ -65,15 +66,20 @@ class Saved extends Component {
         />
 
         <h3>{book.title}</h3>
-        <p>{book.description}</p>
-        <p>{book.google_id}</p>
-        <p>{book.authors}</p>
-        {
-          book.image ? (
-            <img src={book.image} alt="book-image"></img>
-          ) :
-            ('')
-        }
+        <p>Written by {book.authors.join(', ')}</p>
+        <Row>
+          <Col size="md-2 sm-12">
+            {
+              book.image ? (
+                <img src={book.image} alt="book-image"></img>
+              ) :
+                ('')
+            }
+          </Col>
+          <Col size="md-10 sm-12">
+            <p>{book.description}</p>
+          </Col>
+        </Row>
 
       </ListItem>
     ));
@@ -82,28 +88,12 @@ class Saved extends Component {
   render() {
     return (
       <Container fluid>
-        {/* <Row>
-          <Col size="md-12">
             <Jumbotron>
-              <h1>
-                {this.state.book.title} by {this.state.book.author}
-              </h1>
+              <h2>
+                Saved Books
+              </h2>
             </Jumbotron>
-          </Col>
-        </Row>
-        <Row>
-          <Col size="md-10 md-offset-1">
-            <article>
-              <h1>Synopsis</h1>
-              <p>{this.state.book.synopsis}</p>
-            </article>
-          </Col>
-        </Row>
-        <Row>
-          <Col size="md-2">
-            <Link to="/">← Back to Authors</Link>
-          </Col>
-        </Row> */}
+
         <List>
           {this.renderBooks()}
         </List>

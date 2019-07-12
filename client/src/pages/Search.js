@@ -1,12 +1,12 @@
 import React, { Component } from "react";
+
+import API from "../utils/API";
 import ViewBtn from "../components/buttons/ViewBtn";
 import SaveBtn from "../components/buttons/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
-import API from "../utils/API";
-import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../components/Grid";
+import { Col, Container, Row } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+import { Input, FormBtn } from "../components/Form";
 
 
 class Books extends Component {
@@ -76,18 +76,21 @@ class Books extends Component {
         <ViewBtn
           href={book.link}
         />
-
         <h3>{book.title}</h3>
-        <p>{book.description}</p>
-        <p>{book.google_id}</p>
-        <p>{book.authors}</p>
-        {
-          book.image ? (
-            <img src={book.image} alt="book-image"></img>
-          ) :
-            ('')
-        }
-
+        <p>Written by {book.authors.join(', ')}</p>
+        <Row>
+          <Col size="md-2 sm-12">
+            {
+              book.image ? (
+                <img src={book.image} alt="book-image"></img>
+              ) :
+                ('')
+            }
+          </Col>
+          <Col size="md-10 sm-12">
+            <p>{book.description}</p>
+          </Col>
+        </Row>
       </ListItem>
     ));
   }
@@ -96,9 +99,11 @@ class Books extends Component {
     return (
       <Container fluid>
         <Jumbotron>
-
+          <h2>(React) Google Book Search</h2>
+          {/* Book search input */}
           <Input
             name='search'
+            placeholder='Search for books!'
             value={this.state.search}
             onChange={this.handleInputChange}
           />
@@ -117,7 +122,7 @@ class Books extends Component {
             </List>
 
           ) : (
-              <h3>No Results to Display</h3>
+              <h3 style={{textAlign: "center"}}>No Results to Display</h3>
             )
         }
       </Container>

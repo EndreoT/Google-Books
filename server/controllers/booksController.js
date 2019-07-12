@@ -26,6 +26,7 @@ module.exports = {
         if (book.length) {
           return res.status(422).json({ message: 'Book already exists' })
         }
+        
         db.Book
           .create(req.body)
           .then(dbModel => res.json(dbModel))
