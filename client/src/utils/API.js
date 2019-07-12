@@ -1,10 +1,11 @@
 import axios from "axios";
 
-const googleAPIKey = process.env.REACT_APP_GOOGLE_API_KEY;
+// const googleAPIKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const googleBooksSearchBaseUrl = 'https://www.googleapis.com/books/v1/volumes';
 
 function createGoogleBooksSearchUrl(query) {
-  return `${googleBooksSearchBaseUrl}?q=${query}&key=${googleAPIKey}`;
+  // return `${googleBooksSearchBaseUrl}?q=${query}&key=${googleAPIKey}`;
+  return `${googleBooksSearchBaseUrl}?q=${query}`;
 }
 
 export default {
