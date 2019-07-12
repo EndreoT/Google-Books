@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
+import { runInThisContext } from "vm";
 
 class Books extends Component {
   state = {
@@ -14,11 +15,17 @@ class Books extends Component {
   };
 
   componentDidMount() {
-    this.loadBooks();
+    // this.loadBooks();
   }
 
-  loadBooks = () => {
-    API.searchBooks('calvin and hobbes')
+  deleteBooks = () => {
+    this.setState({books: []})
+  }
+
+  searchBooks = (query) => {
+    this.deleteBooks()
+    
+    API.searchBooks(query)
       .then(res => {
         const processedBooks = [];
 
@@ -51,15 +58,7 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
-      })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    }
+    this.searchBooks(this.state.search)
   };
 
   renderBooks = () => {
@@ -82,9 +81,13 @@ class Books extends Component {
       <Container fluid>
         <Jumbotron>
 
-          <Input 
-          name=''
-          onChange={this.handleInputChange}></Input>
+          <Input
+            name='search'
+            value={this.state.search}
+            onChange={this.handleInputChange}
+          />
+
+
 
           <FormBtn
             onClick={this.handleFormSubmit}
@@ -106,13 +109,3 @@ class Books extends Component {
 }
 
 export default Books;
-
-{/* <ListItem key={book.googleId}> */ }
-{/* <Link to={"/books/" + book.googleId}> */ }
-{/* <strong> */ }
-{/* {book.title} by {book.author} */ }
-// {book}
-{/* </strong> */ }
-{/* </Link> */ }
-{/* <DeleteBtn onClick={() => this.deleteBook(book._id)} /> */ }
-{/* </ListItem> */ }
