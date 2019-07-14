@@ -4,9 +4,7 @@ const db = require("../models");
 module.exports = {
   findAll: function (req, res) {
     db.Book
-      // .find(req.query)
       .find({})
-      // .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -30,7 +28,14 @@ module.exports = {
         db.Book
           .create(req.body)
           .then(dbModel => {
-            req.io.emit('book_saved', dbModel);
+
+            // Emit books saved message
+            // req.io.on('', function(socket) {
+            //   console.log('emit')
+              // req.socket.broadcast.emit('book_saved', dbModel);
+            // });
+            // req.io.emit('book_saved', dbModel);
+
             res.json(dbModel);
           })
           .catch(err => {

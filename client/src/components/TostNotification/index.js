@@ -15,7 +15,8 @@ class ToastNotification extends React.Component {
   }
 
   initSocket = () => {
-    socket.on('book_saved', (msg) => {
+    socket.on('book_save_server', (msg) => {
+      console.log(msg)
       this.notify(msg.title);
     });
   }

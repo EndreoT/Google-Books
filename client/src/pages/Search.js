@@ -26,7 +26,7 @@ class Books extends Component {
   }
 
   initSocket = () => {
-    socket.on('book_saved', (msg) => {
+    socket.on('book_save_server', (msg) => {
       this.setSavedBookUI(msg.google_id);
     });
   }
@@ -82,6 +82,8 @@ class Books extends Component {
   saveBook = (savedBook) => {
 
     this.setSavedBookUI(savedBook.google_id)
+
+    socket.emit('book_save_client', savedBook);
 
     API.saveBook(savedBook)
       .then(res => {

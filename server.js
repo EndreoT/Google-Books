@@ -31,15 +31,11 @@ class App {
   initSocketIO() {
     this.io = socket(this.server);
 
-    this.io.on('connection', function (socket) {
-      console.log('a user connected');
-      // this.io.emit('search', 'yo');
-      // socket.on('search', function (query) {
-      //   console.log(query)
-      //   this.io.emit('search', query);
-      // });
-      socket.on('disconnect', function () {
-        console.log('user disconnected');
+      
+    this.io.on('connection', (socket) => {
+      socket.on('book_save_client', (msg) => {
+        console.log(msg)
+        socket.broadcast.emit('book_save_server', msg);
       });
     });
   }
@@ -63,10 +59,10 @@ class App {
     this.app.use(express.json());
 
     // Bind socketIO to each request object
-    this.app.use((req, res, next) => {
-      req.io = this.io;
-      next();
-    });
+    // this.app.use((req, res, next) => {
+    //   req.io = this.io;
+    //   next();
+    // });
   }
 
   initStaticAssets() {
