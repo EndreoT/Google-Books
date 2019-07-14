@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import openSocket from 'socket.io-client';
 
 import API from "../utils/API";
 import * as utils from '../utils/utils';
@@ -10,6 +11,8 @@ import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
 import BookDisplay from '../components/BookDisplay';
 
+const socket = openSocket({ transports: ['polling'] });
+
 
 class Books extends Component {
 
@@ -17,6 +20,16 @@ class Books extends Component {
     books: [],
     search: ''
   };
+
+  componentDidMount() {
+    this.initSocket();
+  }
+
+  initSocket = () => {
+    socket.on('book_saved', (msg) => {
+      this.setSavedBookUI(msg.google_id);
+    });
+  }
 
   deleteBooks = () => {
     this.setState({ books: [] })
@@ -56,15 +69,19 @@ class Books extends Component {
       })
   };
 
-  saveBook = (savedBook) => {
-
+  setSavedBookUI = (google_id) => {
     const books = this.state.books;
     books.forEach(book => {
-      if (book.google_id === savedBook.google_id) {
+      if (book.google_id === google_id) {
         book.saved = true;
       }
     })
     this.setState({ books })
+  }
+
+  saveBook = (savedBook) => {
+
+    this.setSavedBookUI(savedBook.google_id)
 
     API.saveBook(savedBook)
       .then(res => {
