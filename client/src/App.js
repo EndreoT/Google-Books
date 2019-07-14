@@ -13,27 +13,27 @@ import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
 
-const socket = openSocket();
+const socket = openSocket({transports: ['polling']});
 
 
 class App extends React.Component {
 
   componentDidMount() {
-    this.initSocket()
+    this.initSocket();
   }
 
   initSocket = () => {
     socket.on('book_saved', (msg) => {
-      this.notify(msg);
+      this.notify(msg.title);
     });
   }
 
   notify = (msg) => {
     toast(
       (<div>
-        <p>'{msg.title}' just saved!</p>
+        <p>'{msg}' just saved!</p>
       </div>)
-    )
+    );
   };
 
   render() {
