@@ -13,12 +13,11 @@ import BookDisplay from '../components/BookDisplay';
 
 import openSocket from 'socket.io-client';
 
-const socket = openSocket();
+const socket = openSocket('http://localhost:3001/');
 
 socket.on('search', function(msg){
   console.log(msg);
 });
-
 
 
 class Books extends Component {
