@@ -15,7 +15,8 @@ const bookSchema = new Schema({
   },
   description: {
     type: String,
-    required: true
+    required: true,
+    default: '',
   },
   authors: {
     type: [String],
@@ -23,7 +24,8 @@ const bookSchema = new Schema({
   },
   image: {
     type: String,
-    required: true
+    required: true,
+    default: '',
   },
   link: {
     type: String,

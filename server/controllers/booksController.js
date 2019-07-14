@@ -29,7 +29,10 @@ module.exports = {
 
         db.Book
           .create(req.body)
-          .then(dbModel => res.json(dbModel))
+          .then(dbModel => {
+            req.io.emit('book_saved', dbModel);
+            res.json(dbModel);
+          })
           .catch(err => {
             console.log(err)
             res.status(422).json(err)
@@ -56,6 +59,7 @@ module.exports = {
   },
 
   findByGoogleId: function (req, res) {
+
     db.Book
       .find({ google_id: req.params.google_id })
       .then(dbModel => res.json(dbModel))
