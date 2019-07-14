@@ -11,6 +11,16 @@ import { Input, FormBtn } from "../components/Form";
 import BookDisplay from '../components/BookDisplay';
 
 
+import openSocket from 'socket.io-client';
+
+const socket = openSocket();
+
+socket.on('search', function(msg){
+  console.log(msg);
+});
+
+
+
 class Books extends Component {
 
   state = {
@@ -24,6 +34,9 @@ class Books extends Component {
 
   searchBooks = (query) => {
     this.deleteBooks()
+
+    socket.emit('search', query)
+    
 
     API.searchBooks(query)
       .then(async res => {
