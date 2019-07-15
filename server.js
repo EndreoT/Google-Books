@@ -33,9 +33,8 @@ class App {
 
       
     this.io.on('connection', (socket) => {
-      socket.on('book_save_client', (msg) => {
-        console.log(msg)
-        socket.broadcast.emit('book_save_server', msg);
+      socket.on('book_save', (msg) => {
+        socket.broadcast.emit('book_save', msg);
       });
     });
   }
